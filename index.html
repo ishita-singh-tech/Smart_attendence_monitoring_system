@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Attendance Monitoring System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">SA</div>
+        <div><strong>SmartAttend</strong><span>Monitoring System</span></div>
+      </div>
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-item" data-page="attendance"><span>✓</span> Mark Attendance</button>
+      <button class="nav-item" data-page="students"><span>♙</span> Students</button>
+      <button class="nav-item" data-page="reports"><span>▤</span> Attendance Reports</button>
+      <div class="sidebar-note">
+        <div class="note-icon">i</div>
+        <div><strong>Project Prototype</strong><p>Academic OS PBL interface. Sample records are stored in this browser.</p></div>
+      </div>
+      <div class="sidebar-footer">NIET · Greater Noida<br><span>Operating Systems PBL · Group 25</span></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">OPERATING SYSTEMS · PBL PROJECT</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <div class="topbar-right">
+          <div class="date-chip" id="todayLabel">Today</div>
+          <div class="avatar">SA</div>
+        </div>
+      </header>
+
+      <section class="page active" id="dashboardPage">
+        <div class="welcome-card">
+          <div>
+            <span class="pill">ATTENDANCE OVERVIEW</span>
+            <h2>Make every class count.</h2>
+            <p>Manage student records, mark classroom attendance, and review attendance summaries in one place.</p>
+            <button class="primary-btn" data-goto="attendance">＋ Start attendance session</button>
+          </div>
+          <div class="welcome-illustration" aria-hidden="true">
+            <div class="illustration-circle">✓</div>
+            <div class="illustration-line line-one"></div>
+            <div class="illustration-line line-two"></div>
+            <div class="illustration-line line-three"></div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon lilac">♙</span></div><strong id="totalStudents">0</strong><small>Registered in this prototype</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Marked present today</span><span class="stat-icon mint">✓</span></div><strong id="presentToday">0</strong><small>Unique students marked present</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Sessions created</span><span class="stat-icon peach">▣</span></div><strong id="totalSessions">0</strong><small>Saved attendance sessions</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Average attendance</span><span class="stat-icon blue">％</span></div><strong id="averageAttendance">0%</strong><small>Across saved student records</small></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-heading"><div><h3>Recent attendance</h3><p>Your latest saved attendance entries</p></div><button class="text-btn" data-goto="reports">View reports →</button></div>
+            <div class="table-wrap">
+              <table><thead><tr><th>Student</th><th>Session</th><th>Date</th><th>Status</th></tr></thead><tbody id="recentTable"></tbody></table>
+            </div>
+          </section>
+          <section class="panel quick-panel">
+            <div class="panel-heading"><div><h3>Quick actions</h3><p>Common attendance tasks</p></div></div>
+            <button class="quick-action" data-goto="attendance"><span class="quick-icon mint">✓</span><span><strong>Mark attendance</strong><small>Create a session and mark students</small></span><b>›</b></button>
+            <button class="quick-action" data-goto="students"><span class="quick-icon lilac">♙</span><span><strong>Manage students</strong><small>Add or search student records</small></span><b>›</b></button>
+            <button class="quick-action" data-goto="reports"><span class="quick-icon blue">▤</span><span><strong>View reports</strong><small>Check attendance percentages</small></span><b>›</b></button>
+          </section>
+        </div>
+        <p class="footnote">Prototype note: this interface demonstrates a proposed workflow. It does not include verified identity checks or a production login system.</p>
+      </section>
+
+      <section class="page" id="attendancePage">
+        <div class="page-intro"><div><h2>Mark attendance</h2><p>Create a class session, then mark each student present or absent.</p></div><span class="pill">SESSION-BASED RECORDS</span></div>
+        <section class="panel session-panel">
+          <div class="panel-heading"><div><h3>Session details</h3><p>Choose the course and date for this attendance session.</p></div></div>
+          <div class="form-grid">
+            <label>Course / Subject<input id="courseInput" value="Operating Systems" maxlength="70" /></label>
+            <label>Class / Section<input id="sectionInput" value="B.Tech CSE (AI)" maxlength="70" /></label>
+            <label>Session date<input id="sessionDate" type="date" /></label>
+          </div>
+          <div class="session-actions"><button class="primary-btn" id="createSessionBtn">Create new session</button><span id="sessionMessage" class="helper-text">Create a session before marking attendance.</span></div>
+        </section>
+        <section class="panel">
+          <div class="panel-heading responsive-heading"><div><h3>Student attendance</h3><p id="activeSessionLabel">No active session selected</p></div><input class="search-input" id="attendanceSearch" placeholder="Search name or roll number…" /></div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Student</th><th>Roll number</th><th>Attendance status</th><th>Action</th></tr></thead><tbody id="attendanceTable"></tbody></table>
+          </div>
+          <div class="panel-bottom"><span id="attendanceCount">0 students</span><button class="outline-btn" id="finishSessionBtn">Finish session</button></div>
+        </section>
+      </section>
+
+      <section class="page" id="studentsPage">
+        <div class="page-intro"><div><h2>Student records</h2><p>Maintain unique student IDs and classroom records.</p></div><span class="pill">STUDENT MANAGEMENT</span></div>
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Add a student</h3><p>Student ID / roll number must be unique.</p></div></div>
+          <form id="studentForm" class="student-form">
+            <label>Student name<input id="studentName" required maxlength="80" placeholder="e.g. Ayesha Khan" /></label>
+            <label>Roll number / Student ID<input id="studentRoll" required maxlength="35" placeholder="e.g. 2501331520101" /></label>
+            <label>Class / Section<input id="studentSection" maxlength="70" value="B.Tech CSE (AI)" /></label>
+            <button class="primary-btn" type="submit">＋ Add student</button>
+          </form>
+          <p class="helper-text" id="studentMessage" role="status"></p>
+        </section>
+        <section class="panel">
+          <div class="panel-heading responsive-heading"><div><h3>Registered students <span class="count-badge" id="studentCountBadge">0</span></h3><p>Records saved in this browser.</p></div><input class="search-input" id="studentSearch" placeholder="Search students…" /></div>
+          <div class="table-wrap"><table><thead><tr><th>Student name</th><th>Roll number</th><th>Class / Section</th><th>Action</th></tr></thead><tbody id="studentsTable"></tbody></table></div>
+        </section>
+      </section>
+
+      <section class="page" id="reportsPage">
+        <div class="page-intro"><div><h2>Attendance reports</h2><p>Review saved records and calculate attendance percentages.</p></div><button class="outline-btn" id="exportBtn">↓ Export CSV</button></div>
+        <div class="stats-grid report-stats">
+          <article class="stat-card"><div class="stat-top"><span>Total entries</span><span class="stat-icon lilac">▤</span></div><strong id="reportEntries">0</strong><small>Saved attendance records</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Present entries</span><span class="stat-icon mint">✓</span></div><strong id="reportPresent">0</strong><small>Marked as present</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Absent entries</span><span class="stat-icon peach">–</span></div><strong id="reportAbsent">0</strong><small>Marked as absent</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Average attendance</span><span class="stat-icon blue">％</span></div><strong id="reportAverage">0%</strong><small>Present / total entries</small></article>
+        </div>
+        <section class="panel">
+          <div class="panel-heading responsive-heading"><div><h3>Student-wise summary</h3><p>Percentage = present sessions ÷ recorded sessions × 100</p></div><input class="search-input" id="reportSearch" placeholder="Search student…" /></div>
+          <div class="table-wrap"><table><thead><tr><th>Student</th><th>Roll number</th><th>Sessions recorded</th><th>Present</th><th>Absent</th><th>Attendance</th></tr></thead><tbody id="reportTable"></tbody></table></div>
+        </section>
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Saved session history</h3><p>Attendance sessions created in this browser.</p></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Course</th><th>Class / Section</th><th>Date</th><th>Entries</th></tr></thead><tbody id="sessionsTable"></tbody></table></div>
+        </section>
+        <p class="footnote">Percentages use only sessions with a saved attendance status for that student. This is a prototype reporting rule.</p>
+      </section>
+
+      <footer class="main-footer"><span>Smart Attendance Monitoring System</span><span>NIET Greater Noida · Group 25</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
